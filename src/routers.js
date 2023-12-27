@@ -1,6 +1,6 @@
 import Home from "./views/home.vue";
 import Wallet from "./views/wallet.vue";
-import Crypto from "./views/crypto.vue";
+import Crypto from "./views/Crypto.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
