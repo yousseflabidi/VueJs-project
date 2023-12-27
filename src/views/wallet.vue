@@ -38,24 +38,28 @@ onMounted(() => {
 // Get total
 const total = computed(() => {
   return transactions.value.reduce((acc, transaction) => {
-    return acc + transaction.amount;
+    const amountWithPercentage =
+      transaction.amount * (1 + (transaction.percentage || 0) / 100);
+    return acc + amountWithPercentage;
   }, 0);
 });
 
 // Get income
 const income = computed(() => {
-  return transactions.value
-    .filter((transaction) => transaction.amount > 0)
-    .reduce((acc, transaction) => acc + transaction.amount, 0)
-    .toFixed(2);
+  const totalPositivePercentage = transactions.value
+    .filter((transaction) => transaction.percentage > 0)
+    .reduce((acc, transaction) => acc + transaction.percentage, 0);
+
+  // Applying toFixed(2) here to round the result to two decimal places
+  return totalPositivePercentage.toFixed(2);
 });
 
 // Get expenses
 const expenses = computed(() => {
-  return transactions.value
-    .filter((transaction) => transaction.amount < 0)
-    .reduce((acc, transaction) => acc + transaction.amount, 0)
-    .toFixed(2);
+  const totalNegativePercentage = transactions.value
+    .filter((transaction) => transaction.percentage < 0)
+    .reduce((acc, transaction) => acc + transaction.percentage, 0);
+  return totalNegativePercentage.toFixed(2);
 });
 
 // Submit transaction
@@ -64,6 +68,7 @@ const handleTransactionSubmitted = (transactionData) => {
     id: generateUniqueId(),
     text: transactionData.text,
     amount: transactionData.amount,
+    percentage: transactionData.percentage,
   });
 
   saveTransactionsToLocalStorage();

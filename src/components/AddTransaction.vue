@@ -16,39 +16,53 @@
         placeholder="Enter amount..."
         v-model="amount"
       />
+
+      <label for="amount"
+        >percentage <br />
+        (negative - , positive + )</label
+      >
+      <input
+        type="text"
+        id="percentage"
+        placeholder="Enter the percantage..."
+        v-model="percentage"
+      />
     </div>
     <button class="btn">Add transaction</button>
   </form>
 </template>
 
 <script setup>
-import { useToast } from 'vue-toastification';
-import { ref } from 'vue';
+import { useToast } from "vue-toastification";
+import { ref } from "vue";
 
-const text = ref('');
-const amount = ref('');
+const text = ref("");
+const amount = ref("");
+const percentage = ref("");
 
 // Get toast interface
 const toast = useToast();
 
-const emit = defineEmits(['transactionSubmitted']);
+const emit = defineEmits(["transactionSubmitted"]);
 
 const onSubmit = () => {
   if (!text.value || !amount.value) {
     // Display a toast error message if either field is empty
-    toast.error('Both fields must be filled.');
+    toast.error("Both fields must be filled.");
     return;
   }
 
   const transactionData = {
     text: text.value,
     amount: parseFloat(amount.value),
+    percentage: parseFloat(percentage.value),
   };
 
-  emit('transactionSubmitted', transactionData);
-
+  emit("transactionSubmitted", transactionData);
+  console.log(transactionData);
   // Clear form fields
-  text.value = '';
-  amount.value = '';
+  text.value = "";
+  amount.value = "";
+  percentage.value = "";
 };
 </script>
