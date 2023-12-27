@@ -38,7 +38,7 @@ export default {
   methods: {
     login() {
       if (this.username === "admin" && this.password === "123") {
-        this.$router.push("/wallet");
+        this.$router.push("/crypto");
       } else {
         alert("Invalid credentials. Access denied.");
       }
@@ -53,7 +53,6 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f4;
 }
 
 .login-container {
@@ -91,8 +90,9 @@ export default {
 }
 
 .login-btn {
-  background-color: green;
-  color: #fff;
+  background-color: #fcd535;
+  color: black;
+  font-weight: bold;
   padding: 14px;
   border: none;
   border-radius: 4px;
